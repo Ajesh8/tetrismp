@@ -22,6 +22,17 @@ function opSquare(x,y,op) {
 	grid[y][x+1]=op;
 	grid[y-1][x+1]=op;
 }
+
+function checkBSquare(x,y) {
+	if(y+1>23) {
+		return false;
+	}
+	else {
+		if(grid[y+1][x]==1)
+			return false;		
+	}
+	return true; 
+}
 function paintGrid() {
 	for(var i=0;i<24;i++) {
 	for(var j=0;j<10;j++) {
@@ -39,6 +50,10 @@ function paintGrid() {
 }
 }
 
+function getNextPiece() {
+	piecey=3;
+	piecex=4;
+}
 for(var i=0;i<24;i++)
 	{
 		grid[i]=new Array(10);
@@ -55,12 +70,16 @@ var piecex=4;
 
 async function playTetris(){
 	while(true) {
-
 		opSquare(piecex,piecey,1);
 		console.log(grid);
 		paintGrid();
-		opSquare(piecex,piecey,0);
-		piecey=piecey+1;
+		if(checkBSquare(piecex,piecey)){
+			opSquare(piecex,piecey,0);
+			piecey=piecey+1;
+		}
+		else {
+			getNextPiece();
+		}
 		await timer(1000);
 	}
 }
